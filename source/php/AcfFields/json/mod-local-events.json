@@ -51,8 +51,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "g:i a",
-                    "return_format": "g:i a"
+                    "display_format": "H:i",
+                    "return_format": "H:i"
                 },
                 {
                     "key": "field_607e868cf3533",
@@ -67,8 +67,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "g:i a",
-                    "return_format": "g:i a"
+                    "display_format": "H:i",
+                    "return_format": "H:i"
                 }
             ]
         }

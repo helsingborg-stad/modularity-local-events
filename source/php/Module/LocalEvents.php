@@ -28,15 +28,34 @@ class LocalEvents extends \Modularity\Module
     {
         $data = array();
         $fieldNamespace = 'mod_localevents_';
-
+        
         //Map module data to camel case vars
-        $data['startDate'] = get_field('end_date', $this->ID);
-        $data['endDate'] = get_field('start_date', $this->ID);
+        $data['events'] = $this->getLocalEvents();
         $fields = json_decode(json_encode(get_fields($this)));
-        var_dump($fields->ID);
-        var_dump(get_fields('771939'));
-        var_dump($data);
+    
         return $data;
+    }
+
+    private function getPosts() {
+        $args = [
+            'post_type' => 'local-events',
+            'numberposts' => 5,
+            'order' => 'DESC'
+        ];
+
+        return get_posts($args);
+    }
+
+    private function getLocalEvents(){
+        $events = $this->getPosts();
+        $localEventsData = [];
+        
+        foreach($events as &$event) {
+            $sessions = get_field('sessions', $event->ID);
+            $event->sessions = $sessions;
+        }
+
+        return $events;        
     }
 
     /**
