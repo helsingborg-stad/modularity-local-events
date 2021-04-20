@@ -30,47 +30,28 @@ class LocalEvents extends \Modularity\Module
         $fieldNamespace = 'mod_localevents_';
         
         //Map module data to camel case vars
-        $data['sessions'] = $this->getSessions();
-        $data['posts'] = $this->getPosts();
-        $fields = json_decode(json_encode(get_fields($this)));
         
+        $data['posts'] = $this->getPosts();
+        var_dump($data);
         return $data;
     }
 
     private function getPosts() {
+        $today = date('Ymd');
         $args = [
             'post_type' => 'local-events',
             'numberposts' => 5,
+            'order' => 'DESC',
+            'post_status' => 'publish',
+            'meta_query' => array(array( 'key' => 'date', 'value' => $today, 'compare' => '>=' )),
+            'meta_key' => 'date',
+            'orderby' => 'meta_value_num',
             'order' => 'DESC'
         ];
 
         return get_posts($args);
     }
 
-
-    private function getSessions(){
-        $events = $this->getPosts();
-        $sessions = [];
-
-        foreach($events as $event) {
-            $sessionField = get_field('sessions', $event->ID);            
-            $tmp = [];
-            
-            foreach( $sessionField as $session ) {
-                $tmp[] = $session['date'];
-            }
-
-            usort($tmp, [$this, "sortDate"]);
-
-            $sessions[$event->ID] = $tmp[0];
-        }
-
-        return $sessions;        
-    }
-
-    private function sortDate($a, $b) {
-        return strtotime($a) - strtotime($b);            
-    }
 
     /**
      * Rename array item
