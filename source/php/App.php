@@ -6,25 +6,52 @@ class App
 {
     public function __construct()
     {
-        add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
-        add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('plugins_loaded', array($this, 'registerModule'));
+        
+        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'local-events'), __('Local event', 'local-events'), 'local-events', array(
+            'description' => __('Locally stored events', 'local-events'),
+            'menu_icon' => 'dashicons-list-view',
+            'public' => true,
+            'publicly_queriable' => true,
+            'show_ui' => true,
+            'show_in_nav_menus' => true,
+            'has_archive' => true,
+            'hierarchical' => false,
+            'exclude_from_search' => false,
+            'rewrite' => array(
+                'slug' => 'lokala evenemang',
+                'with_front' => false
+            ),
+            'taxonomies' => array(),
+            'supports' => array('title', 'revisions', 'editor')
+        ));
+
+       /*  $postType->addTableColumn(
+            'occasion',
+            __('Occasion', 'local-events'),
+            false,
+            function ($columnKey, $postId) {
+                $occasions = $this->getPostOccasions($postId);
+                if (!$occasions) {
+                    return;
+                }
+                echo($occasions);
+            }
+        ); */
+
     }
 
     /**
-     * Enqueue required style
+     * Register the module
      * @return void
      */
-    public function enqueueStyles()
+    public function registerModule()
     {
-        wp_register_style('mod-local-events-css', MODULARITYLOCALEVENTS_URL . '/dist/' . \ModularityLocalEvents\Helper\CacheBust::name('css/mod-local-events.css'));
-    }
-
-    /**
-     * Enqueue required scripts
-     * @return void
-     */
-    public function enqueueScripts()
-    {
-        wp_register_script('mod-local-events-js', MODULARITYLOCALEVENTS_URL . '/dist/' . \ModularityLocalEvents\Helper\CacheBust::name('js/mod-local-events.js'));
+        if (function_exists('modularity_register_module')) {
+            modularity_register_module(
+                MODULARITYLOCALEVENTS_MODULE_PATH,
+                'LocalEvents'
+            );
+        }
     }
 }

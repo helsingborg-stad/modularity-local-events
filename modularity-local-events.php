@@ -21,6 +21,8 @@ if (! defined('WPINC')) {
 define('MODULARITYLOCALEVENTS_PATH', plugin_dir_path(__FILE__));
 define('MODULARITYLOCALEVENTS_URL', plugins_url('', __FILE__));
 define('MODULARITYLOCALEVENTS_TEMPLATE_PATH', MODULARITYLOCALEVENTS_PATH . 'templates/');
+define('MODULARITYLOCALEVENTS_MODULE_VIEW_PATH', plugin_dir_path(__FILE__) . 'source/php/Module/views');
+define('MODULARITYLOCALEVENTS_MODULE_PATH', MODULARITYLOCALEVENTS_PATH . 'source/php/Module/');
 
 load_plugin_textdomain('mod-local-events', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
@@ -32,6 +34,21 @@ $loader = new ModularityLocalEvents\Vendor\Psr4ClassLoader();
 $loader->addPrefix('ModularityLocalEvents', MODULARITYLOCALEVENTS_PATH);
 $loader->addPrefix('ModularityLocalEvents', MODULARITYLOCALEVENTS_PATH . 'source/php/');
 $loader->register();
+
+// Acf auto import and export
+$acfExportManager = new \AcfExportManager\AcfExportManager();
+$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setExportFolder(MODULARITYLOCALEVENTS_PATH . 'source/php/AcfFields/');
+$acfExportManager->autoExport(array(
+    'mod-local-events' => 'group_607d3a43a526d'
+));
+$acfExportManager->import();
+
+// Modularity 3.0 ready - ViewPath for Component library
+add_filter('/Modularity/externalViewPath', function ($arr) {
+    $arr['mod-local-events'] = MODULARITYLOCALEVENTS_MODULE_VIEW_PATH;
+    return $arr;
+}, 10, 3);
 
 // Start application
 new ModularityLocalEvents\App();

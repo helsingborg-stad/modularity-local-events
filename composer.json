@@ -1,0 +1,20 @@
+{
+    "name": "helsingborg-stad/modularity-local-events",
+    "description": "Local events",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric Rosenborg",
+            "email": "eric.rosenborg@helsingborg.se"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/helsingborg-stad/modularity-local-events.git"
+        }
+    ]
+}
