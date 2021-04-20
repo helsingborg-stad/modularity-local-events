@@ -4,9 +4,9 @@
     "fields": [
         {
             "key": "field_607e83e44b0e7",
-            "label": "Sessions",
-            "name": "sessions",
-            "type": "repeater",
+            "label": "Date",
+            "name": "date",
+            "type": "date_picker",
             "instructions": "",
             "required": 1,
             "conditional_logic": 0,
@@ -15,62 +15,41 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "",
-            "sub_fields": [
-                {
-                    "key": "field_607e84114b0e8",
-                    "label": "Date",
-                    "name": "date",
-                    "type": "date_picker",
-                    "instructions": "Start date for the event",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "d\/m\/Y",
-                    "return_format": "d-m-Y",
-                    "first_day": 1
-                },
-                {
-                    "key": "field_607e85104b0e9",
-                    "label": "Start time",
-                    "name": "start_time",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i",
-                    "return_format": "H:i"
-                },
-                {
-                    "key": "field_607e868cf3533",
-                    "label": "End time",
-                    "name": "end_time",
-                    "type": "time_picker",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "H:i",
-                    "return_format": "H:i"
-                }
-            ]
+            "display_format": "d-m-Y",
+            "return_format": "d-m-Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_607ed2b654b8f",
+            "label": "Start time",
+            "name": "start_time",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
+        },
+        {
+            "key": "field_607ed2eb54b90",
+            "label": "End time",
+            "name": "end_time",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
         }
     ],
     "location": [
