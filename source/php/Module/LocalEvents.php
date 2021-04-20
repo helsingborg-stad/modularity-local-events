@@ -30,9 +30,10 @@ class LocalEvents extends \Modularity\Module
         $fieldNamespace = 'mod_localevents_';
         
         //Map module data to camel case vars
-        $data['events'] = $this->getLocalEvents();
+        $data['sessions'] = $this->getSessions();
+        $data['posts'] = $this->getPosts();
         $fields = json_decode(json_encode(get_fields($this)));
-    
+        
         return $data;
     }
 
@@ -46,16 +47,29 @@ class LocalEvents extends \Modularity\Module
         return get_posts($args);
     }
 
-    private function getLocalEvents(){
+
+    private function getSessions(){
         $events = $this->getPosts();
-        $localEventsData = [];
-        
-        foreach($events as &$event) {
-            $sessions = get_field('sessions', $event->ID);
-            $event->sessions = $sessions;
+        $sessions = [];
+
+        foreach($events as $event) {
+            $sessionField = get_field('sessions', $event->ID);            
+            $tmp = [];
+            
+            foreach( $sessionField as $session ) {
+                $tmp[] = $session['date'];
+            }
+
+            usort($tmp, [$this, "sortDate"]);
+
+            $sessions[$event->ID] = $tmp[0];
         }
 
-        return $events;        
+        return $sessions;        
+    }
+
+    private function sortDate($a, $b) {
+        return strtotime($a) - strtotime($b);            
     }
 
     /**
