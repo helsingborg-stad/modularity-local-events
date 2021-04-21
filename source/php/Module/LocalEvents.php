@@ -31,8 +31,9 @@ class LocalEvents extends \Modularity\Module
         
         //Map module data to camel case vars
         
-        $data['posts'] = $this->getPosts();
-        var_dump($data);
+        $data['events'] = $this->getPosts();
+        $data['events'] = $this->formatEvents($data['events']);
+
         return $data;
     }
 
@@ -41,17 +42,33 @@ class LocalEvents extends \Modularity\Module
         $args = [
             'post_type' => 'local-events',
             'numberposts' => 5,
-            'order' => 'DESC',
             'post_status' => 'publish',
             'meta_query' => array(array( 'key' => 'date', 'value' => $today, 'compare' => '>=' )),
             'meta_key' => 'date',
             'orderby' => 'meta_value_num',
-            'order' => 'DESC'
+            'order' => 'ASC'
         ];
 
         return get_posts($args);
     }
 
+    public function formatEvents($events) {
+        foreach ($events as $key => $event) {
+            $fields     = get_fields($event->ID);
+            $timestamp  = strtotime($fields['date']);
+            $year       = date("Y", $timestamp);
+
+            $event->day         = date("j", $timestamp);
+            $event->monthShort  = __(date("M", $timestamp), 'local-events');
+            $event->month       = __(date("F", $timestamp), 'local-events');
+
+            $event->dateFormatted = "{$event->day} {$event->month} {$year}, {$fields['start_time']} - {$fields['end_time']}";
+
+            $events[$key] = $event;
+        }
+
+        return $events;
+    }
 
     /**
      * Rename array item
