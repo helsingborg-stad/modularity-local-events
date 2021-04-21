@@ -3,11 +3,11 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_607d3a43a526d',
-    'title' => __('Dates', 'event-manager'),
+    'title' => __('Local Events', 'modularity-local-events'),
     'fields' => array(
         0 => array(
             'key' => 'field_607e83e44b0e7',
-            'label' => __('Date', 'event-manager'),
+            'label' => __('Date', 'modularity-local-events'),
             'name' => 'date',
             'type' => 'date_picker',
             'instructions' => '',
@@ -24,7 +24,7 @@
         ),
         1 => array(
             'key' => 'field_607ed2b654b8f',
-            'label' => __('Start time', 'event-manager'),
+            'label' => __('Start time', 'modularity-local-events'),
             'name' => 'start_time',
             'type' => 'time_picker',
             'instructions' => '',
@@ -40,7 +40,7 @@
         ),
         2 => array(
             'key' => 'field_607ed2eb54b90',
-            'label' => __('End time', 'event-manager'),
+            'label' => __('End time', 'modularity-local-events'),
             'name' => 'end_time',
             'type' => 'time_picker',
             'instructions' => '',
