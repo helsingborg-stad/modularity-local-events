@@ -21,6 +21,7 @@ if (! defined('WPINC')) {
 define('MODULARITYLOCALEVENTS_PATH', plugin_dir_path(__FILE__));
 define('MODULARITYLOCALEVENTS_URL', plugins_url('', __FILE__));
 define('MODULARITYLOCALEVENTS_TEMPLATE_PATH', MODULARITYLOCALEVENTS_PATH . 'templates/');
+define('MODULARITYLOCALEVENTS_VIEW_PATH', MODULARITYLOCALEVENTS_PATH . 'views/');
 define('MODULARITYLOCALEVENTS_MODULE_VIEW_PATH', plugin_dir_path(__FILE__) . 'source/php/Module/views');
 define('MODULARITYLOCALEVENTS_MODULE_PATH', MODULARITYLOCALEVENTS_PATH . 'source/php/Module/');
 
