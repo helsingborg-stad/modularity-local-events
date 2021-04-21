@@ -24,7 +24,7 @@ define('MODULARITYLOCALEVENTS_TEMPLATE_PATH', MODULARITYLOCALEVENTS_PATH . 'temp
 define('MODULARITYLOCALEVENTS_MODULE_VIEW_PATH', plugin_dir_path(__FILE__) . 'source/php/Module/views');
 define('MODULARITYLOCALEVENTS_MODULE_PATH', MODULARITYLOCALEVENTS_PATH . 'source/php/Module/');
 
-load_plugin_textdomain('mod-local-events', false, plugin_basename(dirname(__FILE__)) . '/languages');
+load_plugin_textdomain('modularity-local-events', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
 require_once MODULARITYLOCALEVENTS_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once MODULARITYLOCALEVENTS_PATH . 'Public.php';
@@ -37,7 +37,7 @@ $loader->register();
 
 // Acf auto import and export
 $acfExportManager = new \AcfExportManager\AcfExportManager();
-$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setTextdomain('modularity-local-events');
 $acfExportManager->setExportFolder(MODULARITYLOCALEVENTS_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
     'mod-local-events' => 'group_607d3a43a526d'

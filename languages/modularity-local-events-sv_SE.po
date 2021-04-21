@@ -1,0 +1,109 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Modularity local events\n"
+"POT-Creation-Date: 2021-04-21 10:52+0200\n"
+"PO-Revision-Date: 2021-04-21 10:52+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: modularity-local-events.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: source/php/AcfFields/php/mod-local-events.php:6
+msgid "Local Events"
+msgstr ""
+
+#: source/php/AcfFields/php/mod-local-events.php:10
+msgid "Date"
+msgstr "Datum"
+
+#: source/php/AcfFields/php/mod-local-events.php:27
+msgid "Start time"
+msgstr "Starttid"
+
+#: source/php/AcfFields/php/mod-local-events.php:43
+msgid "End time"
+msgstr "Sluttid"
+
+#: source/php/App.php:11 source/php/Module/LocalEvents.php:19
+msgid "Local events"
+msgstr "Lokala evenemang"
+
+#: source/php/App.php:11 source/php/Module/LocalEvents.php:18
+msgid "Local event"
+msgstr "Lokalt evenemang"
+
+#: source/php/App.php:12 source/php/Module/LocalEvents.php:20
+msgid "Locally stored events"
+msgstr "Lokalt sparade evenemang"
+
+#: source/php/Entity/PostType.php:46 source/php/Entity/PostType.php:47
+#, php-format
+msgid "Add new %s"
+msgstr "Skapa ny %s"
+
+#: source/php/Entity/PostType.php:48
+#, php-format
+msgid "Edit %s"
+msgstr "Redigera %s"
+
+#: source/php/Entity/PostType.php:49
+#, php-format
+msgid "New %s"
+msgstr "Ny %s"
+
+#: source/php/Entity/PostType.php:50
+#, php-format
+msgid "View %s"
+msgstr "Visa %s"
+
+#: source/php/Entity/PostType.php:51
+#, php-format
+msgid "Search %s"
+msgstr "Sök %s"
+
+#: source/php/Entity/PostType.php:52
+#, php-format
+msgid "No %s found"
+msgstr "Inga %s hittades"
+
+#: source/php/Entity/PostType.php:53
+#, php-format
+msgid "No %s found in trash"
+msgstr "Inga %s hittades i papperskorgen"
+
+#: source/php/Entity/PostType.php:54
+#, php-format
+msgid "Parent %s:"
+msgstr "Överordnad %s:"
+
+#. Plugin Name of the plugin/theme
+msgid "Modularity local events"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "(#plugin_url#)"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "A plugin for creating and displaying events locally on a site"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Eric Rosenborg"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "(#plugin_author_url#)"
+msgstr ""
