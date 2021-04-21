@@ -2,6 +2,8 @@
 
 namespace ModularityLocalEvents;
 
+use ModularityLocalEvents\Helper\CacheBust;
+
 class App
 {
     public function __construct()
@@ -39,6 +41,12 @@ class App
             }
         ); */
 
+        // Add view paths
+        add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 2, 1);
+        add_filter('Municipio/viewData', array($this, 'singleViewData')); 
+
+        wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/'. CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
+        wp_enqueue_style('modularity_local_event');
     }
 
     /**
@@ -54,4 +62,51 @@ class App
             );
         }
     }
+
+    /**
+     * Add searchable blade template paths
+     * @param array  $array Template paths
+     * @return array        Modified template paths
+     */
+    public function addViewPaths($array)
+    {
+        // If child theme is active, insert plugin view path after child views path.
+        if (is_child_theme()) {
+            array_splice( $array, 2, 0, array(MODULARITYLOCALEVENTS_VIEW_PATH) );
+        } else {
+            // Add view path first in the list if child theme is not active.
+            array_unshift($array, MODULARITYLOCALEVENTS_VIEW_PATH);
+        }
+
+        return $array;
+    }
+
+    /**
+     * Add event data to single view
+     * @param array $data Default view data
+     * @return array Modified view data
+     */
+    public function singleViewData($data)
+    {
+        // Bail if not event
+        if (get_post_type() !== 'local-events' || is_archive()) {
+            return $data;
+        }
+
+        global $post;
+
+        $event      = get_fields($post);
+        $timestamp  = strtotime($event['date']);
+        $year       = date("Y", $timestamp);
+
+        $event['day']         = date("j", $timestamp);
+        $event['monthShort']  = __(date("M", $timestamp), 'local-events');
+        $event['month']       = __(date("F", $timestamp), 'local-events');
+
+        $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
+        $data['event'] = $event;
+
+        return $data;
+    }
+
 }
