@@ -8,8 +8,8 @@ class App
     {
         add_action('plugins_loaded', array($this, 'registerModule'));
         
-        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'local-events'), __('Local event', 'local-events'), 'local-events', array(
-            'description' => __('Locally stored events', 'local-events'),
+        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
+            'description' => __('Locally stored events', 'modularity-local-events'),
             'menu_icon' => 'dashicons-list-view',
             'public' => true,
             'publicly_queriable' => true,

@@ -15,9 +15,9 @@ class LocalEvents extends \Modularity\Module
 
     public function init()
     {
-        $this->nameSingular = __("Local event", 'local-events');
-        $this->namePlural = __("Local events", 'local-events');
-        $this->description = __("Locally stored events", 'local-events');
+        $this->nameSingular = __("Local event", 'modularity-local-events');
+        $this->namePlural = __("Local events", 'modularity-local-events');
+        $this->description = __("Locally stored events", 'modularity-local-events');
     }
 
     /**
