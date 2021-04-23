@@ -8,23 +8,28 @@ class App
     {
         add_action('plugins_loaded', array($this, 'registerModule'));
         
-        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'local-events'), __('Local event', 'local-events'), 'local-events', array(
-            'description' => __('Locally stored events', 'local-events'),
-            'menu_icon' => 'dashicons-list-view',
-            'public' => true,
-            'publicly_queriable' => true,
-            'show_ui' => true,
-            'show_in_nav_menus' => true,
-            'has_archive' => true,
-            'hierarchical' => false,
-            'exclude_from_search' => false,
-            'rewrite' => array(
-                'slug' => 'lokala evenemang',
-                'with_front' => false
-            ),
-            'taxonomies' => array(),
-            'supports' => array('title', 'revisions', 'editor')
-        ));
+        $postType = new \ModularityLocalEvents\Entity\PostType(
+            __('Local events', 'local-events'), 
+            __('Local event', 'local-events'), 
+            'local-events',
+            array(
+                'description' => __('Locally stored events', 'local-events'),
+                'menu_icon' => 'dashicons-list-view',
+                'public' => true,
+                'publicly_queriable' => true,
+                'show_ui' => true,
+                'show_in_nav_menus' => false,
+                'has_archive' => true,
+                'hierarchical' => false,
+                'exclude_from_search' => false,
+                'rewrite' => array(
+                    'slug' => 'localevent',
+                    'with_front' => false
+                ),
+                'taxonomies' => array(),
+                'supports' => array('title', 'revisions', 'editor')
+            )
+        );
 
        /*  $postType->addTableColumn(
             'occasion',
