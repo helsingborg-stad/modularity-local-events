@@ -21,7 +21,7 @@ class App
             'hierarchical' => false,
             'exclude_from_search' => false,
             'rewrite' => array(
-                'slug' => 'lokala evenemang',
+                'slug' => 'event',
                 'with_front' => false
             ),
             'taxonomies' => array(),
