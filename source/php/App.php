@@ -6,6 +6,9 @@ use ModularityLocalEvents\Helper\CacheBust;
 
 class App
 {
+
+    private $postType = 'local-events'; 
+
     public function __construct()
     {
         $template = apply_filters( 'Municipio/Archive/Template', '');
@@ -29,21 +32,8 @@ class App
             'supports' => array('title', 'revisions', 'editor')
         ));
 
-       /*  $postType->addTableColumn(
-            'occasion',
-            __('Occasion', 'local-events'),
-            false,
-            function ($columnKey, $postId) {
-                $occasions = $this->getPostOccasions($postId);
-                if (!$occasions) {
-                    return;
-                }
-                echo($occasions);
-            }
-        ); */
-
         // Add view paths
-        add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 2, 1);
+        add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 1, 1);
         add_filter('Municipio/viewData', array($this, 'singleViewData')); 
         add_filter('Municipio/Controller/Archive/Data', array($this, 'archiveViewData'));
 
@@ -110,7 +100,7 @@ class App
     public function singleViewData($data)
     {
         // Bail if not event
-        if (get_post_type() !== 'local-events' || is_archive()) {
+        if (get_post_type() !== $this->postType && !is_archive()) {
             return $data;
         }
 
