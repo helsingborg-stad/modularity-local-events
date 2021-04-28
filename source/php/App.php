@@ -8,6 +8,7 @@ class App
 {
     public function __construct()
     {
+        $template = apply_filters( 'Municipio/Archive/Template', '');
         add_action('plugins_loaded', array($this, 'registerModule'));
         
         $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
@@ -21,7 +22,7 @@ class App
             'hierarchical' => false,
             'exclude_from_search' => false,
             'rewrite' => array(
-                'slug' => 'lokala evenemang',
+                'slug' => 'local-events',
                 'with_front' => false
             ),
             'taxonomies' => array(),
@@ -44,9 +45,29 @@ class App
         // Add view paths
         add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 2, 1);
         add_filter('Municipio/viewData', array($this, 'singleViewData')); 
+        add_filter('Municipio/Controller/Archive/Data', array($this, 'archiveViewData'));
 
         wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/'. CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
         wp_enqueue_style('modularity_local_event');
+    }
+
+    /**
+     * Get the template style for this archive
+     *
+     * @param string $postType  The post type to get the option from
+     * @param string $default   The default value, if not found.
+     *
+     * @return string
+     */
+    public function getTemplate(string $postType, string $default = 'collapsed') : string
+    {
+        $archiveOption = get_field('archive_' . sanitize_title($this->data['postType']) . '_post_style', 'option');
+
+        if(!empty($archiveOption)) {
+            return $archiveOption;
+        }
+
+        return $default;
     }
 
     /**
@@ -105,6 +126,21 @@ class App
 
         $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
         $data['event'] = $event;
+
+        return $data;
+    }
+
+    public function archiveViewData($data) {
+        
+
+        foreach($data['posts'] as &$post) {
+            $eventDate = get_field('date', $post->id);
+            $startTime = get_field('start_time', $post->id);
+
+            if($post->postType === 'local-events') {
+                $post->startDate = $eventDate . ' ' . $startTime;
+            }
+        }
 
         return $data;
     }
