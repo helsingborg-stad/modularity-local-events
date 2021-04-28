@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_607d3a43a526d',
-    'title' => __('Local Events', 'modularity-local-events'),
+    'title' => __('Event', 'modularity-local-events'),
     'fields' => array(
         0 => array(
             'key' => 'field_607e83e44b0e7',
@@ -19,7 +19,7 @@
                 'id' => '',
             ),
             'display_format' => 'd-m-Y',
-            'return_format' => 'd-m-Y',
+            'return_format' => 'Y-m-d',
             'first_day' => 1,
         ),
         1 => array(
@@ -53,6 +53,25 @@
             ),
             'display_format' => 'H:i',
             'return_format' => 'H:i',
+        ),
+        3 => array(
+            'key' => 'field_608178daad186',
+            'label' => __('Place', 'modularity-local-events'),
+            'name' => 'place',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
         ),
     ),
     'location' => array(

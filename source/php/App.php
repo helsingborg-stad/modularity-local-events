@@ -11,50 +11,53 @@ class App
 
     public function __construct()
     {
+        $template = apply_filters( 'Municipio/Archive/Template', '');
         add_action('plugins_loaded', array($this, 'registerModule'));
         
-        new \ModularityLocalEvents\Entity\PostType(
-            __('Local events', 'modularity-local-events'), 
-            __('Local event', 'modularity-local-events'), 
-            $this->postType, 
-            array(
-                'description' => __('Locally stored events', 'modularity-local-events'),
-                'menu_icon' => 'dashicons-list-view',
-                'public' => true,
-                'publicly_queriable' => true,
-                'show_ui' => true,
-                'show_in_nav_menus' => true,
-                'has_archive' => true,
-                'hierarchical' => false,
-                'exclude_from_search' => false,
-                'rewrite' => array(
-                    'slug' => 'event',
-                    'with_front' => false
-                ),
-                'taxonomies' => array(),
-                'supports' => array('title', 'revisions', 'editor')
-            )
-        );
-
-       /*  $postType->addTableColumn(
-            'occasion',
-            __('Occasion', 'local-events'),
-            false,
-            function ($columnKey, $postId) {
-                $occasions = $this->getPostOccasions($postId);
-                if (!$occasions) {
-                    return;
-                }
-                echo($occasions);
-            }
-        ); */
+        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
+            'description' => __('Locally stored events', 'modularity-local-events'),
+            'menu_icon' => 'dashicons-list-view',
+            'public' => true,
+            'publicly_queriable' => true,
+            'show_ui' => true,
+            'show_in_nav_menus' => true,
+            'has_archive' => true,
+            'hierarchical' => false,
+            'exclude_from_search' => false,
+            'rewrite' => array(
+                'slug' => 'local-events',
+                'with_front' => false
+            ),
+            'taxonomies' => array(),
+            'supports' => array('title', 'revisions', 'editor')
+        ));
 
         // Add view paths
         add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 1, 1);
         add_filter('Municipio/viewData', array($this, 'singleViewData')); 
+        add_filter('Municipio/Controller/Archive/Data', array($this, 'archiveViewData'));
 
         wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/'. CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
         wp_enqueue_style('modularity_local_event');
+    }
+
+    /**
+     * Get the template style for this archive
+     *
+     * @param string $postType  The post type to get the option from
+     * @param string $default   The default value, if not found.
+     *
+     * @return string
+     */
+    public function getTemplate(string $postType, string $default = 'collapsed') : string
+    {
+        $archiveOption = get_field('archive_' . sanitize_title($this->data['postType']) . '_post_style', 'option');
+
+        if(!empty($archiveOption)) {
+            return $archiveOption;
+        }
+
+        return $default;
     }
 
     /**
@@ -113,6 +116,21 @@ class App
 
         $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
         $data['event'] = $event;
+
+        return $data;
+    }
+
+    public function archiveViewData($data) {
+        
+
+        foreach($data['posts'] as &$post) {
+            $eventDate = get_field('date', $post->id);
+            $startTime = get_field('start_time', $post->id);
+
+            if($post->postType === 'local-events') {
+                $post->startDate = $eventDate . ' ' . $startTime;
+            }
+        }
 
         return $data;
     }

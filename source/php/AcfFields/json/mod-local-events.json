@@ -1,6 +1,6 @@
 [{
     "key": "group_607d3a43a526d",
-    "title": "Local Events",
+    "title": "Event",
     "fields": [
         {
             "key": "field_607e83e44b0e7",
@@ -16,7 +16,7 @@
                 "id": ""
             },
             "display_format": "d-m-Y",
-            "return_format": "d-m-Y",
+            "return_format": "Y-m-d",
             "first_day": 1
         },
         {
@@ -50,6 +50,25 @@
             },
             "display_format": "H:i",
             "return_format": "H:i"
+        },
+        {
+            "key": "field_608178daad186",
+            "label": "Place",
+            "name": "place",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
