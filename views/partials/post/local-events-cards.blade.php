@@ -6,7 +6,7 @@
                     'link' => $post->permalink,
                     'imageFirst' => true,
                     'image' =>  $post->thumbnail,
-                    'heading' => '$post->postTitle',
+                    'heading' => $post->postTitle,
                     'classList' => ['t-archive-card', 'u-height--100', 'u-height-100'],
                     'byline' => ['text' => $post->postDate, 'position' => 'body'],
                     'content' => $post->excerptShort,
@@ -15,7 +15,7 @@
                    @slot('subHeading')
                    @typography(['variant' => 'meta', 'element' => 'p'])
                         @icon(['icon' => 'date_range']) @endicon
-                        @date(['action' => 'formatDate', 'format' => 'D d M Y H:i' ,'timestamp' => $post->localEventStartDate])@enddate
+                        @date(['action' => 'formatDate', 'format' => 'D d M Y H:i' ,'timestamp' => $post->startDate])@enddate
                         @endtypography
                    @endslot 
                 @endcard
