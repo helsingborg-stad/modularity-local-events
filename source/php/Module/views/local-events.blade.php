@@ -18,7 +18,9 @@
         @includeWhen($mod_event_archive, 'partials.footer')
     @else
         <div class="c-card__body">
-            {{$no_events}}
+            {{ $no_events }}
         </div>
     @endif
+
+    @includeWhen(!empty($events), 'partials.footer')
 @endcard
