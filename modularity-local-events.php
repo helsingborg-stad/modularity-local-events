@@ -64,6 +64,12 @@ add_filter('Municipio/blade/view_paths', function ($array){
     return $array;
 }, 2, 1);
 
+// Modularity 3.0 ready - ViewPath for Component library
+add_filter('/Modularity/externalViewPath', function ($arr) {
+    $arr['mod-local-events'] = MODULARITYLOCALEVENTS_MODULE_VIEW_PATH;
+    return $arr;
+}, 10, 3);
+
 /**
  * Add searchable blade template paths
  * @param array  $array Template paths
