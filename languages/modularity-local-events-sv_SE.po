@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity local events\n"
-"POT-Creation-Date: 2021-04-21 10:52+0200\n"
-"PO-Revision-Date: 2021-04-21 10:52+0200\n"
+"POT-Creation-Date: 2021-04-29 11:31+0200\n"
+"PO-Revision-Date: 2021-04-29 11:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -21,8 +21,8 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: source/php/AcfFields/php/mod-local-events.php:6
-msgid "Local Events"
-msgstr ""
+msgid "Event"
+msgstr "Evenemang"
 
 #: source/php/AcfFields/php/mod-local-events.php:10
 msgid "Date"
@@ -36,15 +36,19 @@ msgstr "Starttid"
 msgid "End time"
 msgstr "Sluttid"
 
-#: source/php/App.php:11 source/php/Module/LocalEvents.php:19
+#: source/php/AcfFields/php/mod-local-events.php:59
+msgid "Place"
+msgstr "Plats"
+
+#: source/php/App.php:17 source/php/Module/LocalEvents.php:19
 msgid "Local events"
 msgstr "Lokala evenemang"
 
-#: source/php/App.php:11 source/php/Module/LocalEvents.php:18
+#: source/php/App.php:17 source/php/Module/LocalEvents.php:18
 msgid "Local event"
 msgstr "Lokalt evenemang"
 
-#: source/php/App.php:12 source/php/Module/LocalEvents.php:20
+#: source/php/App.php:18 source/php/Module/LocalEvents.php:20
 msgid "Locally stored events"
 msgstr "Lokalt sparade evenemang"
 
@@ -87,6 +91,14 @@ msgstr "Inga %s hittades i papperskorgen"
 #, php-format
 msgid "Parent %s:"
 msgstr "Överordnad %s:"
+
+#: source/php/Module/LocalEvents.php:36
+msgid "No coming events"
+msgstr "Inga kommande evenemang"
+
+#: source/php/Module/LocalEvents.php:37
+msgid "More events"
+msgstr "Fler evenemang"
 
 #. Plugin Name of the plugin/theme
 msgid "Modularity local events"
