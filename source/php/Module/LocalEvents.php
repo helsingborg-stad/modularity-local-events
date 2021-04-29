@@ -15,9 +15,9 @@ class LocalEvents extends \Modularity\Module
 
     public function init()
     {
-        $this->nameSingular = __("Local event", 'local-events');
-        $this->namePlural = __("Local events", 'local-events');
-        $this->description = __("Locally stored events", 'local-events');
+        $this->nameSingular = __("Local event", 'modularity-local-events');
+        $this->namePlural = __("Local events", 'modularity-local-events');
+        $this->description = __("Locally stored events", 'modularity-local-events');
     }
 
     /**
@@ -28,15 +28,49 @@ class LocalEvents extends \Modularity\Module
     {
         $data = array();
         $fieldNamespace = 'mod_localevents_';
-
+        
         //Map module data to camel case vars
-        $data['startDate'] = get_field('end_date', $this->ID);
-        $data['endDate'] = get_field('start_date', $this->ID);
-        $fields = json_decode(json_encode(get_fields($this)));
-        var_dump($fields->ID);
-        var_dump(get_fields('771939'));
-        var_dump($data);
+        
+        $data['events'] = $this->getPosts();
+        $data['events'] = $this->formatEvents($data['events']);
+        $data['no_events'] = __("No coming events", 'modularity-local-events');
+        $data['more_events'] = __('More events', 'modularity-local-events');
+        $data['archive_link'] = get_post_type_archive_link('local-events');
+
         return $data;
+    }
+
+    private function getPosts() {
+        $today = date('Ymd');
+        $args = [
+            'post_type' => 'local-events',
+            'numberposts' => 5,
+            'post_status' => 'publish',
+            'meta_query' => array(array( 'key' => 'date', 'value' => $today, 'compare' => '>=' )),
+            'meta_key' => 'date',
+            'orderby' => 'meta_value_num',
+            'order' => 'ASC'
+        ];
+
+        return get_posts($args);
+    }
+
+    public function formatEvents($events) {
+        foreach ($events as $key => $event) {
+            $fields     = get_fields($event->ID);
+            $timestamp  = strtotime($fields['date']);
+            $year       = date("Y", $timestamp);
+
+            $event->day         = date("j", $timestamp);
+            $event->monthShort  = __(date("M", $timestamp), 'local-events');
+            $event->month       = __(date("F", $timestamp), 'local-events');
+
+            $event->dateFormatted = "{$event->day} {$event->month} {$year}, {$fields['start_time']} - {$fields['end_time']}";
+
+            $events[$key] = $event;
+        }
+
+        return $events;
     }
 
     /**

@@ -21,10 +21,11 @@ if (! defined('WPINC')) {
 define('MODULARITYLOCALEVENTS_PATH', plugin_dir_path(__FILE__));
 define('MODULARITYLOCALEVENTS_URL', plugins_url('', __FILE__));
 define('MODULARITYLOCALEVENTS_TEMPLATE_PATH', MODULARITYLOCALEVENTS_PATH . 'templates/');
+define('MODULARITYLOCALEVENTS_VIEW_PATH', MODULARITYLOCALEVENTS_PATH . 'views/');
 define('MODULARITYLOCALEVENTS_MODULE_VIEW_PATH', plugin_dir_path(__FILE__) . 'source/php/Module/views');
 define('MODULARITYLOCALEVENTS_MODULE_PATH', MODULARITYLOCALEVENTS_PATH . 'source/php/Module/');
 
-load_plugin_textdomain('mod-local-events', false, plugin_basename(dirname(__FILE__)) . '/languages');
+load_plugin_textdomain('modularity-local-events', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
 require_once MODULARITYLOCALEVENTS_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once MODULARITYLOCALEVENTS_PATH . 'Public.php';
@@ -37,7 +38,7 @@ $loader->register();
 
 // Acf auto import and export
 $acfExportManager = new \AcfExportManager\AcfExportManager();
-$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setTextdomain('modularity-local-events');
 $acfExportManager->setExportFolder(MODULARITYLOCALEVENTS_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
     'mod-local-events' => 'group_607d3a43a526d'
@@ -62,6 +63,12 @@ add_filter('Municipio/blade/view_paths', function ($array){
 
     return $array;
 }, 2, 1);
+
+// Modularity 3.0 ready - ViewPath for Component library
+add_filter('/Modularity/externalViewPath', function ($arr) {
+    $arr['mod-local-events'] = MODULARITYLOCALEVENTS_MODULE_VIEW_PATH;
+    return $arr;
+}, 10, 3);
 
 /**
  * Add searchable blade template paths
