@@ -44,12 +44,36 @@ $acfExportManager->autoExport(array(
     'mod-local-events' => 'group_607d3a43a526d'
 ));
 $acfExportManager->import();
-
+/*
 // Modularity 3.0 ready - ViewPath for Component library
 add_filter('/Modularity/externalViewPath', function ($arr) {
     $arr['mod-local-events'] = MODULARITYLOCALEVENTS_MODULE_VIEW_PATH;
     return $arr;
-}, 10, 3);
+}, 10, 3);*/ 
+
+// Add view paths
+add_filter('Municipio/blade/view_paths', function ($array){
+    // If child theme is active, insert plugin view path after child views path.
+    /*if (is_child_theme()) {
+        array_splice( $array, 2, 0, array(EVENTMANAGERINTEGRATION_VIEW_PATH) );
+    } else {
+        // Add view path first in the list if child theme is not active.
+        array_unshift($array, EVENTMANAGERINTEGRATION_VIEW_PATH);
+    }*/ 
+
+    return $array;
+}, 2, 1);
+
+/**
+ * Add searchable blade template paths
+ * @param array  $array Template paths
+ * @return array        Modified template paths
+ */
+
+
+
+
+
 
 // Start application
 new ModularityLocalEvents\App();
