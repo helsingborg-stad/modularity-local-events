@@ -33,6 +33,9 @@ class LocalEvents extends \Modularity\Module
         
         $data['events'] = $this->getPosts();
         $data['events'] = $this->formatEvents($data['events']);
+        $data['no_events'] = __("No coming events", 'modularity-local-events');
+        $data['more_events'] = __('More events', 'modularity-local-events');
+        $data['archive_link'] = get_post_type_archive_link('local-events');
 
         return $data;
     }
