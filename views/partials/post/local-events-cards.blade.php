@@ -15,7 +15,7 @@
                    @slot('subHeading')
                    @typography(['variant' => 'meta', 'element' => 'p'])
                         @icon(['icon' => 'date_range']) @endicon
-                        @date(['action' => 'formatDate', 'format' => 'D d M Y H:i' ,'timestamp' => $post->startDate])@enddate
+                            {{$post->startDate}}
                         @endtypography
                    @endslot 
                 @endcard

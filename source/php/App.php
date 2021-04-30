@@ -111,8 +111,8 @@ class App
         $year       = date("Y", $timestamp);
 
         $event['day']         = date("j", $timestamp);
-        $event['monthShort']  = __(date("M", $timestamp), 'local-events');
-        $event['month']       = __(date("F", $timestamp), 'local-events');
+        $event['monthShort']  = ucfirst(date_i18n("M", $timestamp));
+        $event['month']       = ucfirst(date_i18n("F", $timestamp));
 
         $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
         $data['event'] = $event;
@@ -124,7 +124,7 @@ class App
         
 
         foreach($data['posts'] as &$post) {
-            $eventDate = get_field('date', $post->id);
+            $eventDate = mysql2date('D d M Y', get_field('date', $post->id), true);
             $startTime = get_field('start_time', $post->id);
 
             if($post->postType === 'local-events') {
