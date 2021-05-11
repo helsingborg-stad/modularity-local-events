@@ -39,6 +39,12 @@
                     {{ $event['dateFormatted'] }}
                 @endtypography
             @endif
+
+            @icon(['icon' => 'map']) @endicon
+            @typography(['element' => 'span'])
+                {{$event['place']}}
+            @endtypography
+
         </div>
 
         <div class="o-grid-12 o-grid-8@lg">
