@@ -65,7 +65,11 @@ class LocalEvents extends \Modularity\Module
             $event->monthShort  = __(date("M", $timestamp), 'local-events');
             $event->month       = __(date("F", $timestamp), 'local-events');
 
-            $event->dateFormatted = "{$event->day} {$event->month} {$year}, {$fields['start_time']} - {$fields['end_time']}";
+            $event->dateFormatted = "{$event->day} {$event->month} {$year}, {$fields['start_time']}";
+
+            if($fields['end_time']) {
+                $event->dateFormatted = $event->dateFormatted . "- {$fields['end_time']}";
+            }
 
             $events[$key] = $event;
         }
