@@ -115,6 +115,13 @@ class App
         $event['month']       = ucfirst(date_i18n("F", $timestamp));
 
         $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
+
+        $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']}";
+
+        if($event['end_time']) {
+            $event['dateFormatted'] = $event['dateFormatted'] . "- {$event['end_time']}";
+        }
+
         $data['event'] = $event;
 
         return $data;
