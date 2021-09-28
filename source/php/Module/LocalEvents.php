@@ -28,23 +28,23 @@ class LocalEvents extends \Modularity\Module
     {
         $data = array();
         $fieldNamespace = 'mod_localevents_';
-        
+        $fields = get_fields();        
         //Map module data to camel case vars
-        
-        $data['events'] = $this->getPosts();
+        $data['events'] = $this->getPosts($fields['number_of_events']);
         $data['events'] = $this->formatEvents($data['events']);
         $data['no_events'] = __("No coming events", 'modularity-local-events');
         $data['more_events'] = __('More events', 'modularity-local-events');
         $data['archive_link'] = get_post_type_archive_link('local-events');
+        $data['enableMoreEventsButton'] = $fields['enable_more_events_button'];
 
         return $data;
     }
 
-    private function getPosts() {
+    private function getPosts($numberOfEvents) {
         $today = date('Ymd');
         $args = [
             'post_type' => 'local-events',
-            'numberposts' => 5,
+            'numberposts' => $numberOfEvents,
             'post_status' => 'publish',
             'meta_query' => array(array( 'key' => 'date', 'value' => $today, 'compare' => '>=' )),
             'meta_key' => 'date',
