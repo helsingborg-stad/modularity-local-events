@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Modularity local events\n"
-"POT-Creation-Date: 2021-04-29 11:39+0200\n"
-"PO-Revision-Date: 2021-04-29 11:42+0200\n"
+"POT-Creation-Date: 2021-09-28 15:05+0200\n"
+"PO-Revision-Date: 2021-09-28 15:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: modularity-local-events.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -19,6 +19,14 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: source/php/AcfFields/php/local-events.php:11
+msgid "Enable more events button"
+msgstr "Tillgängliggör knappen för att ladda in fler evenemang"
+
+#: source/php/AcfFields/php/local-events.php:30
+msgid "Number of events"
+msgstr "Antal evenemang"
 
 #: source/php/AcfFields/php/mod-local-events.php:6
 msgid "Event"
@@ -92,11 +100,11 @@ msgstr "Inga %s hittades i papperskorgen"
 msgid "Parent %s:"
 msgstr "Överordnad %s:"
 
-#: source/php/Module/LocalEvents.php:36
+#: source/php/Module/LocalEvents.php:35
 msgid "No coming events"
 msgstr "Inga kommande evenemang"
 
-#: source/php/Module/LocalEvents.php:37
+#: source/php/Module/LocalEvents.php:36
 msgid "More events"
 msgstr "Fler evenemang"
 

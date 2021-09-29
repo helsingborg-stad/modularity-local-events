@@ -41,7 +41,8 @@ $acfExportManager = new \AcfExportManager\AcfExportManager();
 $acfExportManager->setTextdomain('modularity-local-events');
 $acfExportManager->setExportFolder(MODULARITYLOCALEVENTS_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
-    'mod-local-events' => 'group_607d3a43a526d'
+    'mod-local-events' => 'group_607d3a43a526d',
+    'local-events' => 'group_6153072da2c66'
 ));
 $acfExportManager->import();
 /*
