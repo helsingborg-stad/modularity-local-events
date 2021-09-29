@@ -13,10 +13,13 @@
             </span>
             <span class="c-collection__content">
                 @typography(['element' => 'h4'])
-                     {!! apply_filters('the_title', $event->post_title) !!}
+                    
+                    {!! $event->post_title !!}
+
                     @typography(['variant' => 'meta', 'element' => 'p'])
                         {{ $event->dateFormatted }}
                     @endtypography
+
                 @endtypography
             </span>
         </a>

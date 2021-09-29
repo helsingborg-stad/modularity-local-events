@@ -49,13 +49,15 @@ class LocalEvents extends \Modularity\Module
             'meta_query' => array(array( 'key' => 'date', 'value' => $today, 'compare' => '>=' )),
             'meta_key' => 'date',
             'orderby' => 'meta_value_num',
-            'order' => 'ASC'
+            'order' => 'ASC',
+            'suppress_filters' => true
         ];
 
         return get_posts($args);
     }
 
     public function formatEvents($events) {
+
         foreach ($events as $key => $event) {
             $fields     = get_fields($event->ID);
             $timestamp  = strtotime($fields['date']);
@@ -76,16 +78,6 @@ class LocalEvents extends \Modularity\Module
 
         return $events;
     }
-
-    /**
-     * Rename array item
-     * @return array
-     */
-    private function renameArrayKey($from, $to, $array) {
-        $array[$to] = $array[$from];
-        unset($array[$from]);
-        return $array; 
-    } 
 
     /**
      * Blade Template
