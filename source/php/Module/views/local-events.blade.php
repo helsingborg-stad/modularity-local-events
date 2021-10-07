@@ -1,7 +1,7 @@
 @card([
     'heading' => $postTitle,
     'classList' => [$classes],
-    'context' => 'localEvent'
+    'context' => 'module.localevent.list'
 ])
     @if (!$hideTitle && !empty($postTitle))
         <div class="c-card__header">
