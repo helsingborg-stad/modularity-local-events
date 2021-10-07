@@ -1,6 +1,7 @@
 @collection([
     'classList' => [
-        'c-collection--event', 'c-collection--bordered'
+        'c-collection--event', 
+        'c-collection--bordered'
     ]
 ])
     @foreach($events as $event)
