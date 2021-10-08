@@ -18,7 +18,7 @@
         @includeWhen($mod_event_archive, 'partials.footer')
     @else
         <div class="c-card__body">
-            {{ $no_events }}
+            {{ $lang->noEvents }}
         </div>
     @endif
 
