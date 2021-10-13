@@ -146,18 +146,19 @@ class App
         if($query->is_archive() && !is_admin() && $query->query['post_type'] == $this->postType) {
             $query->set('meta_query', 
                 array(
-                    array(
+                    'date' => array(
                         'key' => 'date', 
                         'value' => date('Ymd'), 
-                        'compare' => '>='
+                        'compare' => '>=',
+                        'type' => 'NUMERIC'
                     )
                 )
-            );
+            ); 
 
-            $query->set('meta_key', 'date');
-            $query->set('orderby', 'meta_value_num');
-            $query->set('order', 'ASC');
-		    
+            $query->set('orderby', array(
+                'date' => 'ASC',
+                'start_time' => 'ASC'
+            )); 
         }
         
         return $query;
