@@ -4,25 +4,6 @@
         "title": "Display local events",
         "fields": [
             {
-                "key": "field_6153074129c66",
-                "label": "Enable more events button",
-                "name": "enable_more_events_button",
-                "type": "true_false",
-                "instructions": "Check this box to enable the user to load more events.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 1,
-                "ui": 0,
-                "ui_on_text": "",
-                "ui_off_text": ""
-            },
-            {
                 "key": "field_6153077c29c67",
                 "label": "Number of events",
                 "name": "number_of_events",

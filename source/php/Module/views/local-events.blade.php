@@ -13,14 +13,14 @@
         </div>
     @endif
 
-    @if (!empty($events))
+    @if ($events)
         @include('partials.list')
-        @includeWhen($mod_event_archive, 'partials.footer')
     @else
         <div class="c-card__body">
             {{ $lang->noEvents }}
         </div>
     @endif
 
-    @includeWhen(!empty($events), 'partials.footer')
+    @includeWhen($totalEvents > count($events), 'partials.footer')
+
 @endcard

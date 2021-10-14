@@ -11,10 +11,11 @@ class App
 
     public function __construct()
     {
-        $template = apply_filters( 'Municipio/Archive/Template', '');
+        //Register module
         add_action('plugins_loaded', array($this, 'registerModule'));
-        
-        $postType = new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
+
+        //Register post type
+        new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
             'description' => __('Locally stored events', 'modularity-local-events'),
             'menu_icon' => 'dashicons-list-view',
             'public' => true,
@@ -37,27 +38,12 @@ class App
         add_filter('Municipio/viewData', array($this, 'singleViewData')); 
         add_filter('Municipio/Controller/Archive/Data', array($this, 'archiveViewData'));
 
+        //Filter & order archive
+        add_filter('pre_get_posts', array($this, 'archiveViewFilter'));
+
+        //Add custom css
         wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/'. CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
         wp_enqueue_style('modularity_local_event');
-    }
-
-    /**
-     * Get the template style for this archive
-     *
-     * @param string $postType  The post type to get the option from
-     * @param string $default   The default value, if not found.
-     *
-     * @return string
-     */
-    public function getTemplate(string $postType, string $default = 'collapsed') : string
-    {
-        $archiveOption = get_field('archive_' . sanitize_title($this->data['postType']) . '_post_style', 'option');
-
-        if(!empty($archiveOption)) {
-            return $archiveOption;
-        }
-
-        return $default;
     }
 
     /**
@@ -127,19 +113,55 @@ class App
         return $data;
     }
 
+    /**
+     * Add data to archive view
+     *
+     * @param [type] $data
+     * @return void
+     */
     public function archiveViewData($data) {
-        
 
-        foreach($data['posts'] as &$post) {
-            $eventDate = mysql2date('D d M Y', get_field('date', $post->id), true);
-            $startTime = get_field('start_time', $post->id);
+        if(isset($data['posts']) && is_array($data['posts']) && !empty($data['posts'])) {
+            foreach($data['posts'] as &$post) {
+                $eventDate = mysql2date('D d M Y', get_field('date', $post->id), true);
+                $startTime = get_field('start_time', $post->id);
 
-            if($post->postType === 'local-events') {
-                $post->startDate = $eventDate . ' ' . $startTime;
+                if($post->postType === 'local-events') {
+                    $post->startDate = $eventDate . ' ' . $startTime;
+                }
             }
         }
 
         return $data;
+    }
+
+    /**
+     * Filter & order items on the archive page 
+     *
+     * @param WP_Query $query
+     * @return WP_Query
+     */
+    public function archiveViewFilter($query) {
+
+        if($query->is_archive() && !is_admin() && $query->query['post_type'] == $this->postType) {
+            $query->set('meta_query', 
+                array(
+                    'date' => array(
+                        'key' => 'date', 
+                        'value' => date('Ymd'), 
+                        'compare' => '>=',
+                        'type' => 'NUMERIC'
+                    )
+                )
+            ); 
+
+            $query->set('orderby', array(
+                'date' => 'ASC',
+                'start_time' => 'ASC'
+            )); 
+        }
+        
+        return $query;
     }
 
 }
