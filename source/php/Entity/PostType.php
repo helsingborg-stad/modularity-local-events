@@ -52,13 +52,13 @@ class PostType
             'not_found'           => sprintf(__('No %s found', 'modularity-local-events'), $this->namePlural),
             'not_found_in_trash'  => sprintf(__('No %s found in trash', 'modularity-local-events'), $this->namePlural),
             'parent_item_colon'   => sprintf(__('Parent %s:', 'modularity-local-events'), $this->nameSingular),
-            'menu_name'           => $this->namePlural,
+            'menu_name'           => $this->namePlural
         );
 
         $this->args['labels'] = $labels;
 
         register_post_type($this->slug, $this->args);
-
+        add_post_type_support($this->slug, 'thumbnail');
         return $this->slug;
     }
 
