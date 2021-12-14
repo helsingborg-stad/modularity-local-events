@@ -1,6 +1,6 @@
 @extends('templates.single')
 
-@section('article-after-featured-image')   
+@section('article.featuredimage.after')   
     <div class="localevent-meta c-paper">
         <div class="localevent-meta__date">
             @typography(['variant' => 'h1', 'element' => 'span'])
