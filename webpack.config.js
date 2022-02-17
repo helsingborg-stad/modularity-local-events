@@ -136,7 +136,7 @@ module.exports = {
          * Output CSS files
          */
         new MiniCssExtractPlugin({
-            filename: '[name][contenthash].css'
+            filename: '[name].[contenthash].css'
         }),
 
         /**
