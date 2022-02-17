@@ -1,5 +1,5 @@
-# modularity-contact-banner
-Contact Banner module for modularity
+# Modularity Local events
+Local events module for modularity
 
 ## Getting Started
 Get the latest version and follow the installation steps bellow.
