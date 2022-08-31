@@ -94,18 +94,17 @@ class App
 
         $event      = get_fields($post);
         $timestamp  = strtotime($event['date']);
-        $year       = date("Y", $timestamp);
 
-        $event['day']         = date("j", $timestamp);
-        $event['monthShort']  = ucfirst(date_i18n("M", $timestamp));
-        $event['month']       = ucfirst(date_i18n("F", $timestamp));
+        $formattedDate = wp_date(\Modularity\Helper\Date::getDateFormat('date'), $timestamp); 
+        $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($event['start_time']));          
 
-        $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']} - {$event['end_time']}";
-
-        $event['dateFormatted'] = "{$event['day']} {$event['month']} {$year}, {$event['start_time']}";
+        $event['day']         = wp_date("j", $timestamp);
+        $event['monthShort']  = wp_date("M", $timestamp);
+        $event['dateFormatted'] = "{$formattedDate}, {$formattedStartTime}";
 
         if($event['end_time']) {
-            $event['dateFormatted'] = $event['dateFormatted'] . "- {$event['end_time']}";
+            $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($event['end_time'])); 
+            $event['dateFormatted'] = $event['dateFormatted']. " - {$formattedEndTime}";            
         }
 
         $data['event'] = $event;
