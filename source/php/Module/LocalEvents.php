@@ -87,17 +87,18 @@ class LocalEvents extends \Modularity\Module
 
                 $fields     = get_fields($event->ID);
                 $timestamp  = strtotime($fields['date']);
-                $year       = date("Y", $timestamp);
+
+                $formattedDate = wp_date(\Modularity\Helper\Date::getDateFormat('date'), $timestamp); 
+                $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($fields['start_time']));  
     
-                $event->day         = date("j", $timestamp);
-                $event->monthShort  = __(date("M", $timestamp), 'local-events');
-                $event->month       = __(date("F", $timestamp), 'local-events');
+                $event->day         = wp_date("j", $timestamp);
+                $event->monthShort  = wp_date("M", $timestamp);
                 $event->link        = get_permalink($event->ID);
-    
-                $event->dateFormatted = "{$event->day} {$event->month} {$year}, {$fields['start_time']}";
+                $event->dateFormatted = "{$formattedDate}, {$formattedStartTime}";
     
                 if($fields['end_time']) {
-                    $event->dateFormatted = $event->dateFormatted . "- {$fields['end_time']}";
+                    $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($fields['end_time'])); 
+                    $event->dateFormatted = $event->dateFormatted . " - {$formattedEndTime}";
                 }
     
                 $events[$key] = $event;
