@@ -93,17 +93,17 @@ class App
         global $post;
 
         $event      = get_fields($post);
-        $timestamp  = strtotime($event['date']);
+        $timestamp  = \Modularity\Helper\Date::getTimeStamp($event['date']);
 
         $formattedDate = wp_date(\Modularity\Helper\Date::getDateFormat('date'), $timestamp); 
-        $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($event['start_time']));          
+        $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), \Modularity\Helper\Date::getTimeStamp($event['start_time']));          
 
         $event['day']         = wp_date("j", $timestamp);
         $event['monthShort']  = wp_date("M", $timestamp);
         $event['dateFormatted'] = "{$formattedDate}, {$formattedStartTime}";
 
         if($event['end_time']) {
-            $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($event['end_time'])); 
+            $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), \Modularity\Helper\Date::getTimeStamp($event['end_time'])); 
             $event['dateFormatted'] = $event['dateFormatted']. " - {$formattedEndTime}";            
         }
 

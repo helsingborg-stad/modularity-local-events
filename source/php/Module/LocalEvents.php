@@ -86,10 +86,10 @@ class LocalEvents extends \Modularity\Module
             foreach ($events as $key => $event) {
 
                 $fields     = get_fields($event->ID);
-                $timestamp  = strtotime($fields['date']);
+                $timestamp  = \Modularity\Helper\Date::getTimeStamp($fields['date']);
 
                 $formattedDate = wp_date(\Modularity\Helper\Date::getDateFormat('date'), $timestamp); 
-                $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($fields['start_time']));  
+                $formattedStartTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), \Modularity\Helper\Date::getTimeStamp($fields['start_time']));  
     
                 $event->day         = wp_date("j", $timestamp);
                 $event->monthShort  = wp_date("M", $timestamp);
@@ -97,7 +97,7 @@ class LocalEvents extends \Modularity\Module
                 $event->dateFormatted = "{$formattedDate}, {$formattedStartTime}";
     
                 if($fields['end_time']) {
-                    $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), strtotime($fields['end_time'])); 
+                    $formattedEndTime = wp_date(\Modularity\Helper\Date::getDateFormat('time'), \Modularity\Helper\Date::getTimeStamp($fields['end_time'])); 
                     $event->dateFormatted = $event->dateFormatted . " - {$formattedEndTime}";
                 }
     
