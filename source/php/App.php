@@ -42,8 +42,10 @@ class App
         add_filter('pre_get_posts', array($this, 'archiveViewFilter'));
 
         //Add custom css
-        wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/' . CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
-        wp_enqueue_style('modularity_local_event');
+        add_action('wp_enqueue_scripts', function() {
+            wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/' . CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
+            wp_enqueue_style('modularity_local_event');
+        });
     }
 
     /**
