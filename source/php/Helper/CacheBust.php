@@ -36,7 +36,7 @@ class CacheBust
         if (file_exists($jsonPath)) {
             return json_decode(file_get_contents($jsonPath), true);
         } elseif (WP_DEBUG) {
-            echo '<div style="color:red">Error: Assets not built. Go to ' . MODULARITYLOCALEVENTS_PATH . ' and run gulp. See ' . MODULARITYLOCALEVENTS_PATH . 'README.md for more info.</div>';
+            echo '<div style="color:red">Error: Assets not built. Go to ' . MODULARITYLOCALEVENTS_PATH . ' and run npm run build. See ' . MODULARITYLOCALEVENTS_PATH . 'README.md for more info.</div>';
         }
     }
 }
