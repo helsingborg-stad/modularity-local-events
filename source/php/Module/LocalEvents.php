@@ -12,15 +12,12 @@ class LocalEvents extends \Modularity\Module
 {
     public $slug = 'local-events';
     public $supports = array();
-    private $dateHelper = null;
 
     public function init()
     {
         $this->nameSingular = __("Local event", 'modularity-local-events');
         $this->namePlural = __("Local events", 'modularity-local-events');
         $this->description = __("Locally stored events", 'modularity-local-events');
-
-        $this->dateHelper = new \Modularity\Helper\Date();
     }
 
     /**
@@ -84,15 +81,17 @@ class LocalEvents extends \Modularity\Module
      */
     public function formatEvents($events) {
 
+        $dateHelper = new \Modularity\Helper\Date();
+
         if(is_array($events) && !empty($events)) {
 
             foreach ($events as $key => $event) {
 
                 $fields     = get_fields($event->ID);
-                $timestamp  = $this->dateHelper->getTimeStamp($fields['date']);
+                $timestamp  = $dateHelper->getTimeStamp($fields['date']);
 
-                $formattedDate = wp_date($this->dateHelper->getDateFormat('date'), $timestamp); 
-                $formattedStartTime = wp_date($this->dateHelper->getDateFormat('time'), $this->dateHelper->getTimeStamp($fields['start_time']));  
+                $formattedDate = wp_date($dateHelper->getDateFormat('date'), $timestamp); 
+                $formattedStartTime = wp_date($dateHelper->getDateFormat('time'), $dateHelper->getTimeStamp($fields['start_time']));  
     
                 $event->day         = wp_date("j", $timestamp);
                 $event->monthShort  = wp_date("M", $timestamp);
@@ -100,7 +99,7 @@ class LocalEvents extends \Modularity\Module
                 $event->dateFormatted = "{$formattedDate}, {$formattedStartTime}";
     
                 if($fields['end_time']) {
-                    $formattedEndTime = wp_date($this->dateHelper->getDateFormat('time'), $this->dateHelper->getTimeStamp($fields['end_time'])); 
+                    $formattedEndTime = wp_date($dateHelper->getDateFormat('time'), $dateHelper->getTimeStamp($fields['end_time'])); 
                     $event->dateFormatted = $event->dateFormatted . " - {$formattedEndTime}";
                 }
     

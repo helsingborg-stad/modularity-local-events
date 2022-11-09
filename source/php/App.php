@@ -7,14 +7,11 @@ use ModularityLocalEvents\Helper\CacheBust;
 class App
 {
     private $postType = 'local-events';
-    private $dateHelper = null;
 
     public function __construct()
     {
         //Register module
         add_action('plugins_loaded', array($this, 'registerModule'));
-
-        $this->dateHelper = new \Modularity\Helper\Date();
 
         //Register post type
         new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
@@ -96,17 +93,19 @@ class App
 
         global $post;
 
+        $dateHelper = new \Modularity\Helper\Date();
+
         $event      = get_fields($post);
-        $timestamp  = $this->dateHelper->getTimeStamp($event['date']);
+        $timestamp  = $dateHelper->getTimeStamp($event['date']);
 
         $formattedDate = wp_date(
-            $this->dateHelper->getDateFormat('date'),
+            $dateHelper->getDateFormat('date'),
             $timestamp
         );
 
         $formattedStartTime = wp_date(
-            $this->dateHelper->getDateFormat('time'),
-            $this->dateHelper->getTimeStamp($event['start_time'])
+            $dateHelper->getDateFormat('time'),
+            $dateHelper->getTimeStamp($event['start_time'])
         );
 
         $event['day']         = wp_date("j", $timestamp);
@@ -115,8 +114,8 @@ class App
 
         if ($event['end_time']) {
             $formattedEndTime = wp_date(
-                $this->dateHelper->getDateFormat('time'),
-                $this->dateHelper->getTimeStamp($event['end_time'])
+                $dateHelper->getDateFormat('time'),
+                $dateHelper->getTimeStamp($event['end_time'])
             );
             $event['dateFormatted'] = $event['dateFormatted'] . " - {$formattedEndTime}";
         }
