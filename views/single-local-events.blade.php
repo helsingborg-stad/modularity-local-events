@@ -2,15 +2,10 @@
 
 @section('article.featuredimage.after')   
     <div class="localevent-meta c-paper">
-        <div class="localevent-meta__date">
-            @typography(['variant' => 'h1', 'element' => 'span'])
-                {{ $event['day'] }}
-            @endtypography
-
-            @typography(['variant' => 'h4', 'element' => 'span'])
-                {{ $event['monthShort'] }}
-            @endtypography
-        </div>
+        @datebadge([
+            'date' => $event['date'],
+        ])
+        @enddatebadge
 
         <div class="localevent-meta__metadata">
 
