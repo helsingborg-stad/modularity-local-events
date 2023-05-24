@@ -1,25 +1,65 @@
 @extends('templates.single')
 
-@section('article.featuredimage.after')   
-    <div class="localevent-meta c-paper">
-        @datebadge([
-            'date' => $event['date'],
+@section('sidebar-left')
+@stop
+
+@section('above')
+@if(!empty($post->featuredImage['src']))
+    @segment([
+        'layout'            => 'full-width',
+        'image'             => $post->featuredImage['src'],
+        'background'        => 'primary',
+        'textColor'         => 'light',
+        'overlay'           => 'dark',
+        'classList'         => ['modularity-event-hero', 'u-margin__bottom--5'],
+        'textAlignment'     => 'center',
+        'title'             => $post->postTitle,
+        'content'           => $event['dateFormatted'] ?? false,
+    ])
+    @endsegment
+@endif
+@stop
+
+@section('content')
+    <div class="u-display--inline-flex {{empty($post->featuredImage['src']) ? 'u-margin__top--4' : ''}}">
+        @if(isset($event['date']))
+            @datebadge([
+                'date' => $event['date']
+            ])
+            @enddatebadge
+        @endif
+        
+        @typography([
+            'variant' => 'h1',
+            'element' => 'span',
+            'classList' => ['u-margin__left--2', 'u-margin__top--0']
         ])
-        @enddatebadge
-
-        <div class="localevent-meta__metadata">
-
-            @if (!empty($event['dateFormatted']))
-                @typography(['variant' => 'h4', 'element' => 'h4'])
-                    {{ $event['dateFormatted'] }}
-                @endtypography
-            @endif
-            
-            @icon(['icon' => 'map']) @endicon
-
-            @typography(['element' => 'span'])
-                {{$event['place']}}
-            @endtypography
-        </div>
+            {{$post->postTitle}}
+        @endtypography
     </div>
+    <article>
+        {!! $post->postContentFiltered !!}
+    </article>
+@endsection
+
+@section('sidebar-right')
+@card([
+    'content' => $event['dateFormatted'],
+    'classList' => [empty($post->featuredImage['src']) ? 'u-margin__top--4' : '']
+])
+    <div class="c-card__body">
+        @typography([
+            'element' => 'h2',
+            'variant' => 'h3',
+            'classList' => ['c-card__heading']
+        ])
+            {{$post->postTitle}}
+        @endtypography
+        <ul>
+            <li>
+                {{$event['dateFormatted']}}
+            </li>
+        </ul>
+    </div>
+@endcard
 @stop
