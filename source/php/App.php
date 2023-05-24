@@ -35,7 +35,7 @@ class App
         // Add view paths
         add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 1, 1);
         add_filter('Municipio/viewData', array($this, 'singleViewData')); 
-        add_filter('Municipio/Controller/Archive/Data', array($this, 'archiveViewData'));
+        add_filter('Municipio/Controller/Archive/getDate', array($this, 'getDate'), 10, 2);
 
         //Filter & order archive
         add_filter('pre_get_posts', array($this, 'archiveViewFilter'));
@@ -125,24 +125,11 @@ class App
         return $data;
     }
 
-    /**
-     * Add data to archive view
-     *
-     * @param [type] $data
-     * @return void
-     */
-    public function archiveViewData($data) {
-
-        if(isset($data['posts']) && is_array($data['posts']) && !empty($data['posts'])) {
-            foreach($data['posts'] as &$post) {
-                if($post->postType === 'local-events') {
-                    $fields = get_fields($post->id);
-                    $post->archiveDate = $fields['date'];
-                }
-            }
+    public function getDate($date, $post) {
+        if ($post->postType === 'local-events') {
+            $date = mysql2date('Y-m-d H:i:s', get_field('date', $post->id), true);
         }
-
-        return $data;
+        return $date;
     }
 
     /**
