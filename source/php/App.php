@@ -135,11 +135,9 @@ class App
 
         if(isset($data['posts']) && is_array($data['posts']) && !empty($data['posts'])) {
             foreach($data['posts'] as &$post) {
-                $eventDate = mysql2date('D d M Y', get_field('date', $post->id), true);
-                $startTime = get_field('start_time', $post->id);
-
                 if($post->postType === 'local-events') {
-                    $post->startDate = $eventDate . ' ' . $startTime;
+                    $fields = get_fields($post->id);
+                    $post->archiveDate = $fields['date'];
                 }
             }
         }
