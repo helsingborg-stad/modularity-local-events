@@ -87,7 +87,7 @@ class App
     public function singleViewData($data)
     {
         // Bail if not event
-        if (get_post_type() !== $this->postType && !is_archive()) {
+        if (get_post_type() !== $this->postType && is_archive()) {
             return $data;
         }
 
@@ -112,7 +112,7 @@ class App
         $event['monthShort']  = wp_date("M", $timestamp);
         $event['dateFormatted'] = "{$formattedDate}, {$formattedStartTime}";
 
-        if ($event['end_time']) {
+        if (!empty($event['end_time'])) {
             $formattedEndTime = wp_date(
                 $dateHelper->getDateFormat('time'),
                 $dateHelper->getTimeStamp($event['end_time'])
