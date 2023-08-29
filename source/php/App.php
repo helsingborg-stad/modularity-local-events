@@ -87,7 +87,7 @@ class App
     public function singleViewData($data)
     {
         // Bail if not event
-        if (get_post_type() !== $this->postType && is_archive()) {
+        if (get_post_type() !== $this->postType || is_archive()) {
             return $data;
         }
 
