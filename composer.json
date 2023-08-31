@@ -16,5 +16,10 @@
             "type": "vcs",
             "url": "https://github.com/helsingborg-stad/modularity-local-events.git"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+          "ModularityLocalEvents\\": "source/php/"
+        }
+    }
 }
