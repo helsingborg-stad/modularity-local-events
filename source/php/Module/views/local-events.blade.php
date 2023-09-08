@@ -1,6 +1,4 @@
 @card([
-    'heading' => $postTitle,
-    'classList' => [$classes],
     'context' => 'module.localevent.list'
 ])
     @if (!$hideTitle && !empty($postTitle))
