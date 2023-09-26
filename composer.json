@@ -10,7 +10,7 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": [],
     "repositories": [
         {
             "type": "vcs",
@@ -19,7 +19,8 @@
     ],
     "autoload": {
         "psr-4": {
-          "ModularityLocalEvents\\": "source/php/"
+            "ModularityLocalEvents\\": "source/php/"
         }
-    }
+    },
+    "version": "2.0.0"
 }
