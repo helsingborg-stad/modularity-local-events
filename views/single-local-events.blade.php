@@ -4,10 +4,10 @@
 @stop
 
 @section('above')
-@if(!empty($post->featuredImage['src']))
+@if(!empty($post->images['featuredImage']['src']))
     @segment([
         'layout'            => 'full-width',
-        'image'             => $post->featuredImage['src'],
+        'image'             => $post->images['featuredImage']['src'],
         'background'        => 'primary',
         'textColor'         => 'light',
         'overlay'           => 'dark',
@@ -21,7 +21,7 @@
 @stop
 
 @section('content')
-    <div class="u-display--inline-flex {{empty($post->featuredImage['src']) ? 'u-margin__top--4' : ''}}">
+    <div class="u-display--inline-flex {{empty($post->images['featuredImage']['src']) ? 'u-margin__top--4' : ''}}">
         @if(isset($event['date']))
             @datebadge([
                 'date' => $event['date']
@@ -45,7 +45,7 @@
 @section('sidebar-right')
 @card([
     'content' => $event['dateFormatted'],
-    'classList' => [empty($post->featuredImage['src']) ? 'u-margin__top--4' : '']
+    'classList' => [empty($post->images['featuredImage']['src']) ? 'u-margin__top--4' : '']
 ])
     <div class="c-card__body">
         @typography([
