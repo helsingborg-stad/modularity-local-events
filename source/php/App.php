@@ -11,7 +11,7 @@ class App
     public function __construct()
     {
         //Register module
-        add_action('plugins_loaded', array($this, 'registerModule'));
+        add_action('init', array($this, 'registerModule'));
 
         //Register post type
         new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
