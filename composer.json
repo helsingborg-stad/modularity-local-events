@@ -9,8 +9,21 @@
             "email": "eric.rosenborg@helsingborg.se"
         }
     ],
-    "minimum-stability": "stable",
-    "require": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": [
+                "type:wordpress-muplugin",
+                "type:wordpress-theme",
+                "type:wordpress-plugin",
+                "type:acf-plugin"
+            ]
+        }
+    },
+    "require": {
+        "helsingborg-stad/municipio": "^6.0.0"
+    },
     "repositories": [
         {
             "type": "vcs",
@@ -22,5 +35,10 @@
             "ModularityLocalEvents\\": "source/php/"
         }
     },
-    "version": "3.1.2"
+    "version": "3.1.2",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
