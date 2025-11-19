@@ -35,10 +35,5 @@
             "ModularityLocalEvents\\": "source/php/"
         }
     },
-    "version": "3.1.2",
-    "config": {
-        "allow-plugins": {
-            "composer/installers": true
-        }
-    }
+    "version": "4.0.0"
 }
