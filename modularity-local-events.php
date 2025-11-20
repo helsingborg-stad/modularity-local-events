@@ -4,7 +4,7 @@
  * Plugin Name:       Modularity local events
  * Plugin URI:        (#plugin_url#)
  * Description:       A plugin for creating and displaying events locally on a site
- * Version: 4.0.1
+ * Version: 4.0.2
  * Author:            Eric Rosenborg
  * Author URI:        (#plugin_author_url#)
  * License:           MIT
