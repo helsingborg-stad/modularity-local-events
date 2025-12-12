@@ -2,19 +2,20 @@
 
 namespace ModularityLocalEvents;
 
-use ModularityLocalEvents\Helper\CacheBust;
+use WpUtilService\Features\Enqueue\EnqueueManager;
 
 class App
 {
     private $postType = 'local-events';
 
-    public function __construct()
-    {
+    public function __construct(
+        private EnqueueManager $wpEnqueue,
+    ) {
         //Register module
-        add_action('init', array($this, 'registerModule'));
+        add_action('init', [$this, 'registerModule']);
 
         //Register post type
-        new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', array(
+        new \ModularityLocalEvents\Entity\PostType(__('Local events', 'modularity-local-events'), __('Local event', 'modularity-local-events'), 'local-events', [
             'description' => __('Locally stored events', 'modularity-local-events'),
             'menu_icon' => 'dashicons-list-view',
             'public' => true,
@@ -24,27 +25,24 @@ class App
             'has_archive' => true,
             'hierarchical' => false,
             'exclude_from_search' => false,
-            'rewrite' => array(
+            'rewrite' => [
                 'slug' => 'local-events',
-                'with_front' => false
-            ),
-            'taxonomies' => array(),
-            'supports' => array('title', 'revisions', 'editor')
-        ));
+                'with_front' => false,
+            ],
+            'taxonomies' => [],
+            'supports' => ['title', 'revisions', 'editor'],
+        ]);
 
         // Add view paths
-        add_filter('Municipio/blade/view_paths', array($this, 'addViewPaths'), 1, 1);
-        add_filter('Municipio/viewData', array($this, 'singleViewData')); 
-        add_filter('Municipio/Controller/Archive/getDate', array($this, 'getDate'), 10, 2);
+        add_filter('Municipio/blade/view_paths', [$this, 'addViewPaths'], 1, 1);
+        add_filter('Municipio/viewData', [$this, 'singleViewData']);
+        add_filter('Municipio/Controller/Archive/getDate', [$this, 'getDate'], 10, 2);
 
         //Filter & order archive
-        add_filter('pre_get_posts', array($this, 'archiveViewFilter'));
+        add_filter('pre_get_posts', [$this, 'archiveViewFilter']);
 
         //Add custom css
-        add_action('wp_enqueue_scripts', function() {
-            wp_register_style('modularity_local_event', MODULARITYLOCALEVENTS_URL . '/dist/' . CacheBust::name('css/modularity-local-events.css'), null, '1.0.0');
-            wp_enqueue_style('modularity_local_event');
-        });
+        $this->wpEnqueue->on('wp_enqueue_scripts')->add('css/modularity-local-events.css', [], '1.0.0');
     }
 
     /**
@@ -56,7 +54,7 @@ class App
         if (function_exists('modularity_register_module')) {
             modularity_register_module(
                 MODULARITYLOCALEVENTS_MODULE_PATH,
-                'LocalEvents'
+                'LocalEvents',
             );
         }
     }
@@ -70,7 +68,7 @@ class App
     {
         // If child theme is active, insert plugin view path after child views path.
         if (is_child_theme()) {
-            array_splice( $array, 2, 0, array(MODULARITYLOCALEVENTS_VIEW_PATH) );
+            array_splice($array, 2, 0, [MODULARITYLOCALEVENTS_VIEW_PATH]);
         } else {
             // Add view path first in the list if child theme is not active.
             array_unshift($array, MODULARITYLOCALEVENTS_VIEW_PATH);
@@ -95,29 +93,29 @@ class App
 
         $dateHelper = new \Modularity\Helper\Date();
 
-        $event      = get_fields($post);
-        $timestamp  = $dateHelper->getTimeStamp($event['date']);
+        $event = get_fields($post);
+        $timestamp = $dateHelper->getTimeStamp($event['date']);
 
         $formattedDate = wp_date(
             $dateHelper->getDateFormat('date'),
-            $timestamp
+            $timestamp,
         );
 
         $formattedStartTime = wp_date(
             $dateHelper->getDateFormat('time'),
-            $dateHelper->getTimeStamp($event['start_time'])
+            $dateHelper->getTimeStamp($event['start_time']),
         );
 
-        $event['day']         = wp_date("j", $timestamp);
-        $event['monthShort']  = wp_date("M", $timestamp);
+        $event['day'] = wp_date('j', $timestamp);
+        $event['monthShort'] = wp_date('M', $timestamp);
         $event['dateFormatted'] = "{$formattedDate}, {$formattedStartTime}";
 
         if (!empty($event['end_time'])) {
             $formattedEndTime = wp_date(
                 $dateHelper->getDateFormat('time'),
-                $dateHelper->getTimeStamp($event['end_time'])
+                $dateHelper->getTimeStamp($event['end_time']),
             );
-            $event['dateFormatted'] = $event['dateFormatted'] . " - {$formattedEndTime}";
+            $event['dateFormatted'] .= " - {$formattedEndTime}";
         }
 
         $data['event'] = $event;
@@ -125,7 +123,8 @@ class App
         return $data;
     }
 
-    public function getDate($date, $post) {
+    public function getDate($date, $post)
+    {
         if ($post->postType === 'local-events') {
             $date = mysql2date('Y-m-d H:i:s', get_field('date', $post->id), true);
         }
@@ -133,32 +132,29 @@ class App
     }
 
     /**
-     * Filter & order items on the archive page 
+     * Filter & order items on the archive page
      *
      * @param WP_Query $query
      * @return WP_Query
      */
-    public function archiveViewFilter($query) {
+    public function archiveViewFilter($query)
+    {
+        if ($query->is_archive() && !is_admin() && $query->query['post_type'] == $this->postType) {
+            $query->set('meta_query', [
+                'date' => [
+                    'key' => 'date',
+                    'value' => date('Ymd'),
+                    'compare' => '>=',
+                    'type' => 'NUMERIC',
+                ],
+            ]);
 
-        if($query->is_archive() && !is_admin() && $query->query['post_type'] == $this->postType) {
-            $query->set('meta_query', 
-                array(
-                    'date' => array(
-                        'key' => 'date', 
-                        'value' => date('Ymd'), 
-                        'compare' => '>=',
-                        'type' => 'NUMERIC'
-                    )
-                )
-            ); 
-
-            $query->set('orderby', array(
+            $query->set('orderby', [
                 'date' => 'ASC',
-                'start_time' => 'ASC'
-            )); 
+                'start_time' => 'ASC',
+            ]);
         }
-        
+
         return $query;
     }
-
 }

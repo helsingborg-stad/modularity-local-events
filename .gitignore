@@ -8,6 +8,7 @@ node_modules/
 /vendor
 
 dist/
+/assets/
 
 # ignore jekyll build directory
 /_site
@@ -55,3 +56,4 @@ dist/.temp
 # track these files, if they exist
 !.gitignore
 !.editorconfig
+!.vscode

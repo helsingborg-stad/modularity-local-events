@@ -12,6 +12,8 @@
  * Text Domain:       mod-local-events
  * Domain Path:       /languages
  */
+use WpService\Implementations\NativeWpService;
+use WpUtilService\WpUtilService;
 
  // Protect agains direct file access
 if (! defined('WPINC')) {
@@ -49,5 +51,8 @@ add_filter('/Modularity/externalViewPath', function ($arr) {
     return $arr;
 }, 10, 3);
 
+$wpService = new NativeWpService();
+$wpUtilService = new WpUtilService($wpService);
+
 // Start application
-new ModularityLocalEvents\App();
+new ModularityLocalEvents\App($wpUtilService->enqueue(__DIR__));
