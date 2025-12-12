@@ -49,6 +49,9 @@ Thumbs.db
 dist/temp
 dist/.temp
 
+phpunit-log.xml
+phpunit-testdox.txt
+
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
