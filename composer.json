@@ -11,6 +11,13 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test:coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html .coverage/html --coverage-clover .coverage/clover.xml",
+        "lint": "vendor/bin/mago lint",
+        "fix": "vendor/bin/mago lint --format-after-fix --fix",
+        "format": "vendor/bin/mago fmt"
+    },
     "extra": {
         "installer-paths": {
             "vendor/{$vendor}/{$name}": [
@@ -22,7 +29,15 @@
         }
     },
     "require": {
+        "helsingborg-stad/wpservice": "^2.0",
+        "helsingborg-stad/wputilservice": "^0.2.44"
+    },
+    "suggest": {
         "helsingborg-stad/municipio": "^6.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5",
+        "carthage-software/mago": "^1.0.0-rc.3"
     },
     "repositories": [
         {
@@ -33,6 +48,11 @@
     "autoload": {
         "psr-4": {
             "ModularityLocalEvents\\": "source/php/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "carthage-software/mago": true
         }
     }
 }

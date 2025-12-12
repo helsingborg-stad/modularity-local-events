@@ -9,9 +9,9 @@ class PostType
     protected $slug;
     protected $args;
 
-    public $tableColumns = array();
-    public $tableSortableColumns = array();
-    public $tableColumnsContentCallback = array();
+    public $tableColumns = [];
+    public $tableSortableColumns = [];
+    public $tableColumnsContentCallback = [];
 
     /**
      * Registers a custom post type
@@ -20,7 +20,7 @@ class PostType
      * @param string $slug         Post type slug
      * @param array  $args         Post type arguments
      */
-    public function __construct($namePlural, $nameSingular, $slug, $args = array())
+    public function __construct($namePlural, $nameSingular, $slug, $args = [])
     {
         $this->namePlural = $namePlural;
         $this->nameSingular = $nameSingular;
@@ -28,10 +28,10 @@ class PostType
         $this->args = $args;
 
         // Register post type on init
-        add_action('init', array($this, 'registerPostType'));
-        add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
-        add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
-        add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
+        add_action('init', [$this, 'registerPostType']);
+        add_filter('manage_edit-' . $this->slug . '_columns', [$this, 'tableColumns']);
+        add_filter('manage_edit-' . $this->slug . '_sortable_columns', [$this, 'tableSortableColumns']);
+        add_action('manage_' . $this->slug . '_posts_custom_column', [$this, 'tableColumnsContent'], 10, 2);
     }
 
     /**
@@ -40,20 +40,20 @@ class PostType
      */
     public function registerPostType()
     {
-        $labels = array(
-            'name'                => $this->nameSingular,
-            'singular_name'       => $this->nameSingular,
-            'add_new'             => sprintf(__('Add new %s', 'modularity-local-events'), $this->nameSingular),
-            'add_new_item'        => sprintf(__('Add new %s', 'modularity-local-events'), $this->nameSingular),
-            'edit_item'           => sprintf(__('Edit %s', 'modularity-local-events'), $this->nameSingular),
-            'new_item'            => sprintf(__('New %s', 'modularity-local-events'), $this->nameSingular),
-            'view_item'           => sprintf(__('View %s', 'modularity-local-events'), $this->nameSingular),
-            'search_items'        => sprintf(__('Search %s', 'modularity-local-events'), $this->namePlural),
-            'not_found'           => sprintf(__('No %s found', 'modularity-local-events'), $this->namePlural),
-            'not_found_in_trash'  => sprintf(__('No %s found in trash', 'modularity-local-events'), $this->namePlural),
-            'parent_item_colon'   => sprintf(__('Parent %s:', 'modularity-local-events'), $this->nameSingular),
-            'menu_name'           => $this->namePlural
-        );
+        $labels = [
+            'name' => $this->nameSingular,
+            'singular_name' => $this->nameSingular,
+            'add_new' => sprintf(__('Add new %s', 'modularity-local-events'), $this->nameSingular),
+            'add_new_item' => sprintf(__('Add new %s', 'modularity-local-events'), $this->nameSingular),
+            'edit_item' => sprintf(__('Edit %s', 'modularity-local-events'), $this->nameSingular),
+            'new_item' => sprintf(__('New %s', 'modularity-local-events'), $this->nameSingular),
+            'view_item' => sprintf(__('View %s', 'modularity-local-events'), $this->nameSingular),
+            'search_items' => sprintf(__('Search %s', 'modularity-local-events'), $this->namePlural),
+            'not_found' => sprintf(__('No %s found', 'modularity-local-events'), $this->namePlural),
+            'not_found_in_trash' => sprintf(__('No %s found in trash', 'modularity-local-events'), $this->namePlural),
+            'parent_item_colon' => sprintf(__('Parent %s:', 'modularity-local-events'), $this->nameSingular),
+            'menu_name' => $this->namePlural,
+        ];
 
         $this->args['labels'] = $labels;
 
@@ -128,6 +128,6 @@ class PostType
             return;
         }
 
-        call_user_func_array($this->tableColumnsContentCallback[$column], array($column, $postId));
+        call_user_func_array($this->tableColumnsContentCallback[$column], [$column, $postId]);
     }
 }

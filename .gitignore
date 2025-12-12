@@ -8,6 +8,7 @@ node_modules/
 /vendor
 
 dist/
+/assets/
 
 # ignore jekyll build directory
 /_site
@@ -48,6 +49,9 @@ Thumbs.db
 dist/temp
 dist/.temp
 
+phpunit-log.xml
+phpunit-testdox.txt
+
 # -------------------------
 # BEGIN Whitelisted Files
 # -------------------------
@@ -55,3 +59,4 @@ dist/.temp
 # track these files, if they exist
 !.gitignore
 !.editorconfig
+!.vscode
